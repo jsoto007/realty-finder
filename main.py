@@ -1,6 +1,7 @@
 import requests
 import pprint
 import csv
+import datetime
 
 
 print("####****Please Enter the Zip-Code****####")
@@ -11,11 +12,15 @@ print("####********####")
 print("####********####")
 
 zip = input("")
-print(zip)
+print("Zip-code entered:", zip)
 
 
-print("next line")
-print(zip)
+current_time = datetime.datetime.now()
+
+
+day = current_time.day
+month = current_time.month
+year = current_time.year
 
 url = f"https://phl.carto.com/api/v2/sql?q=SELECT * FROM opa_properties_public WHERE zip_code = '{zip}'"
 
@@ -38,7 +43,7 @@ fields = ["objectid",	"assessment_date",	"basements",	"beginning_point",	"book_a
 rows = data['rows']
 
 # Specify the CSV file name
-csv_file = f"Housing Zip-Code {zip}.csv"
+csv_file = f"Housing Zip-Code {zip} {month},{day},{year}.csv"
 
 # Writing to csv file
 with open(csv_file, 'w', newline='') as csvfile:
