@@ -17,7 +17,7 @@ print(zip)
 print("next line")
 print(zip)
 
-url = f"https://phl.carto.com/api/v2/sql?q=SELECT * FROM opa_properties_public WHERE zip_code = '19145'"
+url = f"https://phl.carto.com/api/v2/sql?q=SELECT * FROM opa_properties_public WHERE zip_code = '{zip}'"
 
 
 response = requests.get(url)
