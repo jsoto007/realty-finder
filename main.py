@@ -5,11 +5,11 @@ import datetime
 
 
 print("####****Please Enter the Zip-Code****####")
-print("####********####")
-print("####********####")
+print("############********############")
+print("############********############")
 print("####****only numbers no spaces****####")
-print("####********####")
-print("####********####")
+print("############********############")
+print("############********############")
 
 zip = input("")
 print("Zip-code entered:", zip)
