@@ -29,7 +29,7 @@ day = current_time.day
 month = current_time.month
 year = current_time.year
 
-url = f"https://phl.carto.com/api/v2/sql?q=SELECT * FROM opa_properties_public WHERE zip_code = '{zip}'"
+url = f"https://phl.carto.com/api/v2/sql?q=SELECT * FROM opa_properties_public WHERE zip_code = '{zip}' LIMIT 5"
 
 
 response = requests.get(url)
