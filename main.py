@@ -87,7 +87,7 @@ def gets_tax_balance():
     time.sleep(5)
     
     for row in data['rows']:
-        stree_name = row['mailing_street']
+        stree_name = row['location']
         driver.get("https://www.phila.gov/revenue/realestatetax/")
         
         time.sleep(5)
