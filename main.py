@@ -2,12 +2,9 @@ import requests
 import pprint
 import csv
 import datetime
-import atexit
-import re
 import time
 from bs4 import BeautifulSoup
 from pynput.keyboard import Key, Controller
-
 from selenium import webdriver
 
 driver = webdriver.Firefox()
@@ -32,7 +29,7 @@ day = current_time.day
 month = current_time.month
 year = current_time.year
 
-url = f"https://phl.carto.com/api/v2/sql?q=SELECT * FROM opa_properties_public WHERE zip_code = '{zip}' LIMIT 5"
+url = f"https://phl.carto.com/api/v2/sql?q=SELECT * FROM opa_properties_public WHERE zip_code = '{zip}'"
 
 
 response = requests.get(url)
@@ -50,24 +47,60 @@ if response.status_code == 200:
 
 # Get the tax balance from the website.
 
+# def gets_tax_balance():
+#     keyboard = Controller()
+#     time.sleep(5)
+#     for row in data['rows']:
+#         stree_name = row['mailing_street']
+#         driver.get("https://www.phila.gov/revenue/realestatetax/")
+        
+#         time.sleep(3)
+        
+#         search_bar = driver.find_element("xpath", 
+#                                          "//input[contains(@id, 'Dc-c')]")
+#         search_bar.click()
+#         keyboard.type(f"{stree_name}")
+#         keyboard.press(Key.enter)
+#         keyboard.release(Key.enter)
+#         time.sleep(1)
+        
+#         try:
+#             opa_number = driver.find_element("xpath",
+#                                              "//a[contains(@id, 'l_Dc-l-1')]")
+#             opa_number.click()
+#             time.sleep(1)
+            
+#             balance = driver.find_element("xpath",
+#                                           "//span[contains(@id, 'fgvt_Dc-d')]")
+#             t_balance = balance.text
+
+#             print("Tax Balance:", t_balance)
+
+#         except Exception as e:
+#             t_balance = "Result not Found"
+        
+#         time.sleep(1)
+#         row["Taxed_Balance"] = f"{t_balance}"
+
 def gets_tax_balance():
     keyboard = Controller()
     time.sleep(5)
+    
     for row in data['rows']:
         stree_name = row['mailing_street']
         driver.get("https://www.phila.gov/revenue/realestatetax/")
         
         time.sleep(5)
         
-        search_bar = driver.find_element("xpath", 
-                                         "//input[contains(@id, 'Dc-c')]")
-        search_bar.click()
-        keyboard.type(f"{stree_name}")
-        keyboard.press(Key.enter)
-        keyboard.release(Key.enter)
-        time.sleep(2)
-        
         try:
+            search_bar = driver.find_element("xpath", 
+                                             "//input[contains(@id, 'Dc-c')]")
+            search_bar.click()
+            keyboard.type(f"{stree_name}")
+            keyboard.press(Key.enter)
+            keyboard.release(Key.enter)
+            time.sleep(2)
+            
             opa_number = driver.find_element("xpath",
                                              "//a[contains(@id, 'l_Dc-l-1')]")
             opa_number.click()
@@ -75,48 +108,16 @@ def gets_tax_balance():
             
             balance = driver.find_element("xpath",
                                           "//span[contains(@id, 'fgvt_Dc-d')]")
-            t_balance = balance.text
-
+            t_balance = balance.text  # Get the inner text
             print("Tax Balance:", t_balance)
-
         except Exception as e:
             t_balance = "Result not Found"
+            time.sleep(5)  # Sleep for 5 seconds before moving to the next iteration
+            row["Taxed_Balance"] = t_balance
+            continue
         
         time.sleep(1)
-        row["Taxed_Balance"] = f"{t_balance}"
-# def gets_tax_balance():
-  
-  
-#   keyboard = Controller()
-#   time.sleep(5)
-#   for row in data['rows']:
-#       stree_name = (row['mailing_street'])
-#       driver.get("https://www.phila.gov/revenue/realestatetax/")
-
-#       time.sleep(5)
-
-#       search_bar = driver.find_element("xpath", 
-#                                 "//input[contains(@id, 'Dc-c')]")
-#       search_bar.click()
-#       keyboard.type(f"{stree_name}")
-#       keyboard.press(Key.enter)
-#       keyboard.release(Key.enter)
-#       time.sleep(2)
-#       opa_number = driver.find_element("xpath",
-#                                        "//a[contains(@id, 'l_Dc-l-1')]")
-      
-#       opa_number.click()
-
-#       time.sleep(2)
-
-#       balance = driver.find_element("xpath",
-#                                     "//span[contains(@id, 'fgvt_Dc-d')]")
-#       t_balance = balance.get_attribute('text')
-
-#       time.sleep(1)
-#       row["Taxed_Balance"] = f"{t_balance}"
-
-
+        row["Taxed_Balance"] = t_balance
 
 gets_tax_balance()
 
