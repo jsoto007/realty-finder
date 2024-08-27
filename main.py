@@ -45,42 +45,6 @@ if response.status_code == 200:
 
   pprint.pp(data)
 
-# Get the tax balance from the website.
-
-# def gets_tax_balance():
-#     keyboard = Controller()
-#     time.sleep(5)
-#     for row in data['rows']:
-#         stree_name = row['mailing_street']
-#         driver.get("https://www.phila.gov/revenue/realestatetax/")
-        
-#         time.sleep(3)
-        
-#         search_bar = driver.find_element("xpath", 
-#                                          "//input[contains(@id, 'Dc-c')]")
-#         search_bar.click()
-#         keyboard.type(f"{stree_name}")
-#         keyboard.press(Key.enter)
-#         keyboard.release(Key.enter)
-#         time.sleep(1)
-        
-#         try:
-#             opa_number = driver.find_element("xpath",
-#                                              "//a[contains(@id, 'l_Dc-l-1')]")
-#             opa_number.click()
-#             time.sleep(1)
-            
-#             balance = driver.find_element("xpath",
-#                                           "//span[contains(@id, 'fgvt_Dc-d')]")
-#             t_balance = balance.text
-
-#             print("Tax Balance:", t_balance)
-
-#         except Exception as e:
-#             t_balance = "Result not Found"
-        
-#         time.sleep(1)
-#         row["Taxed_Balance"] = f"{t_balance}"
 
 def gets_tax_balance():
     keyboard = Controller()
