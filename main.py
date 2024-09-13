@@ -38,9 +38,6 @@ response = requests.get(url)
 if response.status_code == 200:
   data = response.json()
 
-
-    
-
   pp = pprint.PrettyPrinter(indent=4)
 
   pprint.pp(data)
@@ -60,7 +57,7 @@ def gets_tax_balance():
             search_bar = driver.find_element("xpath", 
                                              "//input[contains(@id, 'Dc-c')]")
             search_bar.click()
-            keyboard.type(f"{stree_name}")
+            search_bar.send_keys(f"{stree_name}")
             keyboard.press(Key.enter)
             keyboard.release(Key.enter)
             time.sleep(2)
